@@ -1,22 +1,27 @@
 __author__ = 'jayvyas'
 import random
-
+import math
 
 def roulette_wheel(model):
-
-    wheel = []
+    wheel = [None] * len(model)
     cumProb = 0.0
-    for item, prob in model.items():
+    for i in range(len(model)):
+        (item, prob) = model[i]
+        print(i,item,prob)
         cumProb += prob
-        print(cumProb)
-        bin = (item, cumProb)
-        wheel.append(bin)
-    r = random.random()
-    previous = None
-    for item, upperbound in wheel:
-        if upperbound >= r:
-            return previous
-        previous = item
+        wheel[i] = cumProb
+    return wheel
 
 
-print(roulette_wheel({"age":.25}))
+wheel = roulette_wheel(
+    [
+        ("dog food",0.7),
+        ("fish food",0.1),
+        ("bird food",0.1),
+        ("small rodent food",0.05),
+        ("reptile food",0.05)
+    ])
+
+for i in range(1000):
+    r = math.floor(random.random()*len(wheel))
+    print(wheel[int(r)])
